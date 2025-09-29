@@ -422,3 +422,5 @@ class AhorcadoPainter extends CustomPainter {
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
 }
+
+// Corina Lynch y Jesus Simancas
