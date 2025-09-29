@@ -1,3 +1,7 @@
+// VER ESTE LINK AL TERMINAR https://drive.google.com/file/d/1WlJnwOTvOzjKMj6SCLt-wZ8LF37Q3MvV/view?usp=drivesdk
+
+
+
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -12,12 +16,12 @@ class AhorcadoApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'El Ahorcado 🎯',
+      title: 'El Ahorcado 🎯', // Se pone la barra que da el titulo
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
+      theme: ThemeData( // Tema
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueAccent),
         useMaterial3: true,
-        fontFamily: 'Arial',
+        fontFamily: 'Arial', // Fuente
       ),
       home: const PantallaInicio(),
     );
@@ -35,10 +39,10 @@ class PantallaInicio extends StatefulWidget {
 class _PantallaInicioState extends State<PantallaInicio>
     with TickerProviderStateMixin {
   late AnimationController _fadeController;
-  late Animation<double> _fadeLogo;
-  late Animation<double> _fadeTitulo;
-  late Animation<double> _fadeAutores;
-  late Animation<double> _fadeBoton;
+  late Animation<double> _fadeLogo; // Le da sombrita
+  late Animation<double> _fadeTitulo; // Le da la animacion
+  late Animation<double> _fadeAutores; // Animacion
+  late Animation<double> _fadeBoton; // Se desaparece
 
   @override
   void initState() {
@@ -87,8 +91,8 @@ class _PantallaInicioState extends State<PantallaInicio>
             FadeTransition(
               opacity: _fadeLogo,
               child: Container(
-                width: 120,
-                height: 120,
+                width: 120, // Ancho
+                height: 120, // Alto
                 decoration: BoxDecoration(
                   color: Colors.blueAccent,
                   borderRadius: BorderRadius.circular(30),
@@ -106,7 +110,7 @@ class _PantallaInicioState extends State<PantallaInicio>
               child: const Text(
                 'EL AHORCADO 🎯',
                 style: TextStyle(
-                    fontSize: 32,
+                    fontSize: 32, // Tamano de fuente
                     fontWeight: FontWeight.bold,
                     color: Colors.blueAccent),
               ),
@@ -122,7 +126,7 @@ class _PantallaInicioState extends State<PantallaInicio>
             ),
             const SizedBox(height: 40),
             FadeTransition(
-              opacity: _fadeBoton,
+              opacity: _fadeBoton, // Hace el efecto
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blueAccent,
@@ -139,7 +143,7 @@ class _PantallaInicioState extends State<PantallaInicio>
                   );
                 },
                 child: const Text(
-                  'JUGAR',
+                  'JUGAR', // Titulo
                   style: TextStyle(fontSize: 18, color: Colors.white),
                 ),
               ),
@@ -161,16 +165,16 @@ class PantallaAhorcado extends StatefulWidget {
 
 class _PantallaAhorcadoState extends State<PantallaAhorcado> {
   final List<String> palabras = [
-    'FLUTTER',
-    'AHORCADO',
-    'UNIVERSIDAD',
-    'VENEZUELA',
-    'CODIGO',
-    'PANTALLA',
-    'COMPUTADORA',
-    'TELEFONO',
-    'PROYECTO',
-    'PROGRAMACION'
+    'FLUTTER', // Palabra escodiga 1
+    'AHORCADO', // Palabra escodiga 2
+    'UNIVERSIDAD', // Palabra escodiga 3
+    'VENEZUELA', // Palabra escodiga 4
+    'CODIGO', // Palabra escodiga 5
+    'PANTALLA', // Palabra escodiga 6
+    'COMPUTADORA', // Palabra escodiga 7
+    'TELEFONO', // Palabra escodiga 8
+    'PROYECTO', // Palabra escodiga 9
+    'PROGRAMACION' // Palabra escodiga 10
   ];
 
   String palabra = '';
@@ -424,4 +428,3 @@ class AhorcadoPainter extends CustomPainter {
 }
 
 // Corina Lynch y Jesus Simancas
-// Comentario
