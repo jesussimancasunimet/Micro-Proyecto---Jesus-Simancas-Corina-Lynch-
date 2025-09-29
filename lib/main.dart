@@ -263,7 +263,7 @@ class _PantallaAhorcadoState extends State<PantallaAhorcado> {
     return Scaffold(
       backgroundColor: Colors.blue.shade50,
       appBar: AppBar(
-        title: const Text('El Ahorcado 🎯'),
+        title: const Text('El Ahorcado'),
         centerTitle: true,
         backgroundColor: Colors.blueAccent,
         foregroundColor: Colors.white,
@@ -428,3 +428,4 @@ class AhorcadoPainter extends CustomPainter {
 }
 
 // Corina Lynch y Jesus Simancas
+
