@@ -15,11 +15,71 @@ class AhorcadoApp extends StatelessWidget {
       title: 'El Ahorcado 🎯',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueAccent),
         useMaterial3: true,
         fontFamily: 'Arial',
       ),
-      home: const PantallaAhorcado(),
+      home: const PantallaInicio(),
+    );
+  }
+}
+
+class PantallaInicio extends StatelessWidget {
+  const PantallaInicio({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: const Color(0xFFE3F2FD),
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(32.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(Icons.videogame_asset, size: 100, color: Colors.blueAccent),
+              const SizedBox(height: 20),
+              const Text(
+                'El Ahorcado 🎯',
+                style: TextStyle(
+                  fontSize: 40,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.blueAccent,
+                ),
+              ),
+              const SizedBox(height: 10),
+              const Text(
+                'Corina Lynch y Jesús Simancas\nMicroProyecto',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.blueGrey,
+                ),
+              ),
+              const SizedBox(height: 40),
+              ElevatedButton.icon(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => const PantallaAhorcado()),
+                  );
+                },
+                icon: const Icon(Icons.play_arrow),
+                label: const Text('Comenzar'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blueAccent,
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 16),
+                  textStyle: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                  shadowColor: Colors.blueAccent,
+                  elevation: 5,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
@@ -116,6 +176,15 @@ class _PantallaAhorcadoState extends State<PantallaAhorcado> {
             },
             child: const Text('Jugar de nuevo'),
           ),
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (_) => const PantallaInicio()),
+              );
+            },
+            child: const Text('Volver al inicio'),
+          ),
         ],
       ),
     );
@@ -124,11 +193,11 @@ class _PantallaAhorcadoState extends State<PantallaAhorcado> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF3ECFF),
+      backgroundColor: const Color(0xFFE3F2FD),
       appBar: AppBar(
         title: const Text('El Ahorcado 🎯'),
         centerTitle: true,
-        backgroundColor: const Color(0xFF7B2CBF),
+        backgroundColor: Colors.blueAccent,
         foregroundColor: Colors.white,
         elevation: 5,
       ),
@@ -152,7 +221,7 @@ class _PantallaAhorcadoState extends State<PantallaAhorcado> {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Colors.deepPurple.shade100,
+        color: Colors.lightBlue.shade100,
         borderRadius: BorderRadius.circular(12),
       ),
       child: Row(
@@ -174,7 +243,7 @@ class _PantallaAhorcadoState extends State<PantallaAhorcado> {
         padding: const EdgeInsets.symmetric(horizontal: 4.0),
         child: Text(
           letrasAdivinadas.contains(letra) ? letra : '_',
-          style: const TextStyle(fontSize: 32, letterSpacing: 2),
+          style: const TextStyle(fontSize: 32, letterSpacing: 2, color: Colors.blueAccent),
         ),
       ))
           .toList(),
@@ -192,7 +261,7 @@ class _PantallaAhorcadoState extends State<PantallaAhorcado> {
         return ElevatedButton(
           onPressed: usada ? null : () => _letraSeleccionada(letra),
           style: ElevatedButton.styleFrom(
-            backgroundColor: usada ? Colors.grey.shade400 : Colors.deepPurple,
+            backgroundColor: usada ? Colors.grey.shade300 : Colors.blueAccent,
             foregroundColor: Colors.white,
             padding: const EdgeInsets.all(12),
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
@@ -211,7 +280,7 @@ class _PantallaAhorcadoState extends State<PantallaAhorcado> {
           onPressed: _nuevaPartida,
           icon: const Icon(Icons.refresh),
           label: const Text('Nueva partida'),
-          style: ElevatedButton.styleFrom(backgroundColor: Colors.deepPurple, foregroundColor: Colors.white),
+          style: ElevatedButton.styleFrom(backgroundColor: Colors.blueAccent, foregroundColor: Colors.white),
         ),
         ElevatedButton.icon(
           onPressed: () async {
@@ -224,7 +293,7 @@ class _PantallaAhorcadoState extends State<PantallaAhorcado> {
           },
           icon: const Icon(Icons.delete),
           label: const Text('Reiniciar estadísticas'),
-          style: ElevatedButton.styleFrom(backgroundColor: Colors.pink.shade400, foregroundColor: Colors.white),
+          style: ElevatedButton.styleFrom(backgroundColor: Colors.lightBlue.shade400, foregroundColor: Colors.white),
         ),
       ],
     );
@@ -245,7 +314,7 @@ class AhorcadoPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Colors.black
+      ..color = Colors.blueGrey
       ..strokeWidth = 4
       ..style = PaintingStyle.stroke;
 
