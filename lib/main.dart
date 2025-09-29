@@ -24,7 +24,7 @@ class AhorcadoApp extends StatelessWidget {
   }
 }
 
-/// 🌟 PANTALLA DE INICIO CON LOGO Y ANIMACIÓN
+// 🌟 Pantalla de inicio con animación
 class PantallaInicio extends StatefulWidget {
   const PantallaInicio({super.key});
 
@@ -33,89 +33,125 @@ class PantallaInicio extends StatefulWidget {
 }
 
 class _PantallaInicioState extends State<PantallaInicio>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-  late Animation<double> _animacionLogo;
+    with TickerProviderStateMixin {
+  late AnimationController _fadeController;
+  late Animation<double> _fadeLogo;
+  late Animation<double> _fadeTitulo;
+  late Animation<double> _fadeAutores;
+  late Animation<double> _fadeBoton;
 
   @override
   void initState() {
     super.initState();
 
-    _controller = AnimationController(
-      vsync: this,
-      duration: const Duration(seconds: 2),
+    _fadeController =
+        AnimationController(vsync: this, duration: const Duration(seconds: 3));
+
+    _fadeLogo = CurvedAnimation(
+      parent: _fadeController,
+      curve: const Interval(0.0, 0.3, curve: Curves.easeIn),
     );
 
-    _animacionLogo = CurvedAnimation(parent: _controller, curve: Curves.easeInOutBack);
-    _controller.forward();
+    _fadeTitulo = CurvedAnimation(
+      parent: _fadeController,
+      curve: const Interval(0.3, 0.6, curve: Curves.easeIn),
+    );
 
-    Future.delayed(const Duration(seconds: 3), () {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (_) => const PantallaAhorcado()),
-      );
-    });
+    _fadeAutores = CurvedAnimation(
+      parent: _fadeController,
+      curve: const Interval(0.6, 0.8, curve: Curves.easeIn),
+    );
+
+    _fadeBoton = CurvedAnimation(
+      parent: _fadeController,
+      curve: const Interval(0.8, 1.0, curve: Curves.easeIn),
+    );
+
+    _fadeController.forward();
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _fadeController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const LinearGradient(
-        colors: [Color(0xFF1E88E5), Color(0xFF1565C0)],
-        begin: Alignment.topCenter,
-        end: Alignment.bottomCenter,
-      ).createShader(const Rect.fromLTWH(0, 0, 400, 800)).transform(Offset.zero) == null
-          ? Colors.blueAccent
-          : Colors.transparent,
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Color(0xFF1E88E5), Color(0xFF1565C0)],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
-        ),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ScaleTransition(
-                scale: _animacionLogo,
-                child: const Icon(Icons.psychology_alt_rounded,
-                    color: Colors.white, size: 120),
+      backgroundColor: Colors.blue.shade50,
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            FadeTransition(
+              opacity: _fadeLogo,
+              child: Container(
+                width: 120,
+                height: 120,
+                decoration: BoxDecoration(
+                  color: Colors.blueAccent,
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                child: const Icon(
+                  Icons.psychology_alt_rounded,
+                  size: 70,
+                  color: Colors.white,
+                ),
               ),
-              const SizedBox(height: 20),
-              const Text(
-                'El Ahorcado 🎯',
+            ),
+            const SizedBox(height: 30),
+            FadeTransition(
+              opacity: _fadeTitulo,
+              child: const Text(
+                'EL AHORCADO 🎯',
                 style: TextStyle(
                     fontSize: 32,
                     fontWeight: FontWeight.bold,
-                    color: Colors.white),
+                    color: Colors.blueAccent),
               ),
-              const SizedBox(height: 10),
-              const Text(
-                'Corina Lynch & Jesús Simancas\nMicroproyecto 💻',
+            ),
+            const SizedBox(height: 15),
+            FadeTransition(
+              opacity: _fadeAutores,
+              child: const Text(
+                'Corina Lynch y Jesús Simancas\nMicroproyecto',
                 textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.white70, fontSize: 16),
+                style: TextStyle(fontSize: 16, color: Colors.black54),
               ),
-              const SizedBox(height: 60),
-              const CircularProgressIndicator(
-                  color: Colors.white, strokeWidth: 3),
-            ],
-          ),
+            ),
+            const SizedBox(height: 40),
+            FadeTransition(
+              opacity: _fadeBoton,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blueAccent,
+                  padding:
+                  const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12)),
+                ),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const PantallaAhorcado()),
+                  );
+                },
+                child: const Text(
+                  'JUGAR',
+                  style: TextStyle(fontSize: 18, color: Colors.white),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
   }
 }
 
-/// 🧩 PANTALLA PRINCIPAL DEL JUEGO
+// 🎮 Pantalla principal del juego
 class PantallaAhorcado extends StatefulWidget {
   const PantallaAhorcado({super.key});
 
@@ -125,16 +161,16 @@ class PantallaAhorcado extends StatefulWidget {
 
 class _PantallaAhorcadoState extends State<PantallaAhorcado> {
   final List<String> palabras = [
-    'flutter',
-    'ahorcado',
-    'universidad',
-    'venezuela',
-    'codigo',
-    'pantalla',
-    'computadora',
-    'telefono',
-    'proyecto',
-    'programacion'
+    'FLUTTER',
+    'AHORCADO',
+    'UNIVERSIDAD',
+    'VENEZUELA',
+    'CODIGO',
+    'PANTALLA',
+    'COMPUTADORA',
+    'TELEFONO',
+    'PROYECTO',
+    'PROGRAMACION'
   ];
 
   String palabra = '';
@@ -166,7 +202,7 @@ class _PantallaAhorcadoState extends State<PantallaAhorcado> {
 
   void _nuevaPartida() {
     final random = Random();
-    palabra = palabras[random.nextInt(palabras.length)].toUpperCase();
+    palabra = palabras[random.nextInt(palabras.length)];
     letrasAdivinadas.clear();
     errores = 0;
     setState(() {});
@@ -176,10 +212,13 @@ class _PantallaAhorcadoState extends State<PantallaAhorcado> {
     setState(() {
       if (palabra.contains(letra)) {
         letrasAdivinadas.add(letra);
-        if (palabra.split('').every((l) => letrasAdivinadas.contains(l))) {
+        if (palabra
+            .split('')
+            .every((l) => letrasAdivinadas.contains(l))) {
           partidasGanadas++;
           _guardarEstadisticas();
-          _mostrarDialogo('¡Ganaste! 🎉', 'Adivinaste la palabra "$palabra"');
+          _mostrarDialogo('¡Ganaste! 🎉',
+              'Felicidades, adivinaste la palabra "$palabra"');
         }
       } else {
         errores++;
@@ -197,8 +236,10 @@ class _PantallaAhorcadoState extends State<PantallaAhorcado> {
       context: context,
       barrierDismissible: false,
       builder: (_) => AlertDialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        title: Text(titulo, style: const TextStyle(fontWeight: FontWeight.bold)),
+        shape:
+        RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        title:
+        Text(titulo, style: const TextStyle(fontWeight: FontWeight.bold)),
         content: Text(mensaje),
         actions: [
           TextButton(
@@ -216,11 +257,11 @@ class _PantallaAhorcadoState extends State<PantallaAhorcado> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFE3F2FD),
+      backgroundColor: Colors.blue.shade50,
       appBar: AppBar(
         title: const Text('El Ahorcado 🎯'),
         centerTitle: true,
-        backgroundColor: const Color(0xFF1976D2),
+        backgroundColor: Colors.blueAccent,
         foregroundColor: Colors.white,
       ),
       body: Padding(
@@ -243,16 +284,18 @@ class _PantallaAhorcadoState extends State<PantallaAhorcado> {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Colors.lightBlue.shade100,
+        color: Colors.blueAccent.shade100,
         borderRadius: BorderRadius.circular(12),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           Text('Ganadas: $partidasGanadas 🏆',
-              style: const TextStyle(fontWeight: FontWeight.bold)),
+              style:
+              const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
           Text('Perdidas: $partidasPerdidas 💀',
-              style: const TextStyle(fontWeight: FontWeight.bold)),
+              style:
+              const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
         ],
       ),
     );
@@ -264,14 +307,12 @@ class _PantallaAhorcadoState extends State<PantallaAhorcado> {
       children: palabra
           .split('')
           .map((letra) => Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 4.0),
+        padding:
+        const EdgeInsets.symmetric(horizontal: 4.0),
         child: Text(
           letrasAdivinadas.contains(letra) ? letra : '_',
           style: const TextStyle(
-              fontSize: 32,
-              letterSpacing: 2,
-              fontWeight: FontWeight.bold,
-              color: Color(0xFF0D47A1)),
+              fontSize: 32, letterSpacing: 2),
         ),
       ))
           .toList(),
@@ -285,15 +326,17 @@ class _PantallaAhorcadoState extends State<PantallaAhorcado> {
       spacing: 6,
       runSpacing: 6,
       children: letras.split('').map((letra) {
-        final usada = letrasAdivinadas.contains(letra) || errores >= 6;
+        final usada =
+            letrasAdivinadas.contains(letra) || errores >= 6;
         return ElevatedButton(
           onPressed: usada ? null : () => _letraSeleccionada(letra),
           style: ElevatedButton.styleFrom(
-            backgroundColor: usada ? Colors.grey.shade400 : Colors.blueAccent,
+            backgroundColor:
+            usada ? Colors.grey.shade400 : Colors.blueAccent,
             foregroundColor: Colors.white,
             padding: const EdgeInsets.all(12),
-            shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8)),
           ),
           child: Text(letra, style: const TextStyle(fontSize: 16)),
         );
@@ -310,8 +353,9 @@ class _PantallaAhorcadoState extends State<PantallaAhorcado> {
           icon: const Icon(Icons.refresh),
           label: const Text('Nueva partida'),
           style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.blueAccent,
-              foregroundColor: Colors.white),
+            backgroundColor: Colors.blueAccent,
+            foregroundColor: Colors.white,
+          ),
         ),
         ElevatedButton.icon(
           onPressed: () async {
@@ -325,8 +369,9 @@ class _PantallaAhorcadoState extends State<PantallaAhorcado> {
           icon: const Icon(Icons.delete),
           label: const Text('Reiniciar estadísticas'),
           style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.redAccent,
-              foregroundColor: Colors.white),
+            backgroundColor: Colors.lightBlueAccent,
+            foregroundColor: Colors.white,
+          ),
         ),
       ],
     );
@@ -347,22 +392,31 @@ class AhorcadoPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Colors.black
+      ..color = Colors.blueGrey
       ..strokeWidth = 4
       ..style = PaintingStyle.stroke;
 
-    canvas.drawLine(Offset(20, size.height - 20),
-        Offset(size.width - 20, size.height - 20), paint);
+    // Base y estructura
+    canvas.drawLine(
+        Offset(20, size.height - 20),
+        Offset(size.width - 20, size.height - 20),
+        paint);
     canvas.drawLine(const Offset(50, 20), Offset(50, size.height - 20), paint);
     canvas.drawLine(const Offset(50, 20), const Offset(150, 20), paint);
     canvas.drawLine(const Offset(150, 20), const Offset(150, 50), paint);
 
+    // Cuerpo
     if (errores > 0) canvas.drawCircle(const Offset(150, 70), 20, paint);
-    if (errores > 1) canvas.drawLine(const Offset(150, 90), const Offset(150, 140), paint);
-    if (errores > 2) canvas.drawLine(const Offset(150, 100), const Offset(130, 120), paint);
-    if (errores > 3) canvas.drawLine(const Offset(150, 100), const Offset(170, 120), paint);
-    if (errores > 4) canvas.drawLine(const Offset(150, 140), const Offset(130, 170), paint);
-    if (errores > 5) canvas.drawLine(const Offset(150, 140), const Offset(170, 170), paint);
+    if (errores > 1)
+      canvas.drawLine(const Offset(150, 90), const Offset(150, 140), paint);
+    if (errores > 2)
+      canvas.drawLine(const Offset(150, 100), const Offset(130, 120), paint);
+    if (errores > 3)
+      canvas.drawLine(const Offset(150, 100), const Offset(170, 120), paint);
+    if (errores > 4)
+      canvas.drawLine(const Offset(150, 140), const Offset(130, 170), paint);
+    if (errores > 5)
+      canvas.drawLine(const Offset(150, 140), const Offset(170, 170), paint);
   }
 
   @override
